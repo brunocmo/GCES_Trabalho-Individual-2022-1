@@ -1,12 +1,43 @@
 version: '3.9'
 
 services:
-  postgres:
-      image: postgres:14
-      environment:
-          POSTGRES_USER: "postgres"
-          POSTGRES_PASSWORD: "password"
-          POSTGRES_DB: "library_db"
-      container_name: library_db
-      ports:
-          - "5432:5432"
+    postgres:
+        image: postgres:14
+        environment:
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "password"
+            POSTGRES_DB: "library_db"
+        container_name: library_db
+        ports:
+            - "5432:5432"
+        networks: 
+            backend:
+                ipv4_address: 172.25.0.2
+    library_back:
+        build: ./library_back/
+        container_name: library_back
+        command: 
+            - /bin/sh
+            - -c
+            - |
+                python manage.py makemigrations
+                python manage.py migrate
+                python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./library_back:/library_back
+        ports:
+            - "8000:8000"
+        depends_on:
+            - postgres
+        networks: 
+            backend:
+                ipv4_address: 172.25.0.3
+
+networks:
+    backend:        
+        driver: "bridge"
+        ipam:
+            config:
+                - subnet: 172.25.0.0/16
+                  gateway: 172.25.0.1
+                  
