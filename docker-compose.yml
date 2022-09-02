@@ -32,6 +32,18 @@ services:
         networks: 
             backend:
                 ipv4_address: 172.25.0.3
+    library_front:
+        build: ./library_front/
+        container_name: library_front
+        ports:
+            - "3000:3000"
+        stdin_open: true
+        depends_on:
+            - library_back
+        networks: 
+            backend:
+                ipv4_address: 172.25.0.4
+
 
 networks:
     backend:        
@@ -40,4 +52,3 @@ networks:
             config:
                 - subnet: 172.25.0.0/16
                   gateway: 172.25.0.1
-                  
