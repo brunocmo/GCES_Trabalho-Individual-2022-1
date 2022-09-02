@@ -16,6 +16,12 @@ services:
     library_back:
         build: ./library_back/
         container_name: library_back
+        environment:
+            POSTGRES_DB: library_db
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_HOST: postgres
+            POSTGRES_PORT: 5432
         command: 
             - /bin/sh
             - -c
