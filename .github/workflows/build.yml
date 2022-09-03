@@ -16,5 +16,9 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
+        - name: Install react
+          working-directory: ./library_front
+          run: npm install 
         - name: Run test
-          run: docker-compose run library_front bash -c "npm run test"
+          working-directory: ./library_front
+          run: npm run test
