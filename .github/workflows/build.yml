@@ -5,8 +5,16 @@ on: [push, pull_request]
 
 jobs:
   build:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build application
         run: docker-compose up -d
+
+  test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Run test
+          run: docker-compose run library_front bash -c "npm run test"
