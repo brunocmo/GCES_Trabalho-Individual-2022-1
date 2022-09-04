@@ -76,6 +76,7 @@ jobs:
   lintBack:
       runs-on: ubuntu-latest
       steps:
+        - uses: actions/checkout@v2
         - name: Install flake8
           working-directory: ./library_back
           run: pip install flake8
