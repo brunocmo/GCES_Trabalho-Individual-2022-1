@@ -6,7 +6,40 @@ on:
       - "v*"
 
 jobs:
-  release:
+
+  use-build:
+    uses: brunocmo/GCES_Trabalho-Individual-2022-1/.github/workflows/CI.yml@main
+      
+  deploy_back:
+    needs: use-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with: 
+          context: ./library_back/
+          file: ./library_back/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/library_back:${{github.ref_name}}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+
+  deploy_front:
+    needs: use-build
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -24,12 +57,11 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./library_back/
-          file: ./library_back/Dockerfile
+          context: ./library_front/
+          file: ./library_front/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/library_back:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/library_front:${{github.ref_name}}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
 
