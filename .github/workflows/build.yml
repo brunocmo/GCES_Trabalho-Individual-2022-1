@@ -48,6 +48,12 @@ jobs:
             echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> .env
             echo POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} >> .env
             cat .env
+        - name: Run makemigrations
+          working-directory: ./library_back
+          run: python manage.py makemigrations
+        - name: Run migrate
+          working-directory: ./library_back
+          run: python manage.py migrate
         - name: Run test
           working-directory: ./library_back
           run: python3 manage.py test
