@@ -1,7 +1,6 @@
-name: "Build CI"
+name: "CI"
 
 on: [push, pull_request]
- 
 
 jobs:
   build:
@@ -13,9 +12,7 @@ jobs:
         run: docker-compose up -d
 
   test_Back:
-
       runs-on: ubuntu-latest
-      
       services:
         postgres:
           image: postgres:latest
