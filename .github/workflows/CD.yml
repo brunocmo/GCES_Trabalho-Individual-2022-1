@@ -8,7 +8,7 @@ on:
 jobs:
 
   get-ci:
-    uses: brunocmo/GCES_Trabalho-Individual-2022-1/.github/workflows/CI.yml@main
+    uses: ./.github/workflows/CI.yml
       
   deploy_back:
     needs: get-ci
