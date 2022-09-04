@@ -39,7 +39,7 @@ jobs:
 
 
   deploy_front:
-    needs: use-build
+    needs: get-ci
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
