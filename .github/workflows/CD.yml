@@ -9,6 +9,7 @@ jobs:
 
   get-ci:
     uses: ./.github/workflows/CI.yml
+    secrets: inherit # pass all secrets
       
   deploy_back:
     needs: get-ci
