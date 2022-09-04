@@ -82,6 +82,6 @@ jobs:
           run: pip install flake8
         - name: Verify flake8
           working-directory: ./library_back
-          run: flake8 --count --statistics .
+          run: flake8 --count --statistics --max-line-length=120  .
 
 

@@ -17,16 +17,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Book',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
                 ('title', models.CharField(max_length=150)),
                 ('author', models.CharField(max_length=150)),
                 ('release_year', models.PositiveIntegerField()),
                 ('is_rented', models.BooleanField(default=False)),
-                ('renter', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.RESTRICT, to=settings.AUTH_USER_MODEL)),
+                ('renter', models.ForeignKey(blank=True,
+                                             default=None, null=True,
+                                             on_delete=django.db.models.deletion.RESTRICT,
+                                             to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddConstraint(
             model_name='book',
-            constraint=models.UniqueConstraint(fields=('title', 'author', 'release_year'), name='unique_together_book_keys'),
+            constraint=models.UniqueConstraint(
+                fields=('title', 'author', 'release_year'), name='unique_together_book_keys'),
         ),
     ]
