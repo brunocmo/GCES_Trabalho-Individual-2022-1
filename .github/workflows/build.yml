@@ -88,9 +88,6 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
-        - name: Install react
-          working-directory: ./library_front
-          run: npm install 
         - name: Install ESLint
           working-directory: ./library_front
           run: npm install eslint -g
