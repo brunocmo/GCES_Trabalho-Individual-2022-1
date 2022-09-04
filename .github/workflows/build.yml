@@ -5,14 +5,14 @@ on: [push, pull_request]
 
 jobs:
   build:
-    needs: [testBack, lintBack, testFront]
+    needs: [test_Back, test_Front]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build application
         run: docker-compose up -d
 
-  testBack:
+  test_Back:
 
       runs-on: ubuntu-latest
       
@@ -62,7 +62,7 @@ jobs:
           working-directory: ./library_back
           run: coverage report     
 
-  testFront:
+  test_Front:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
@@ -73,7 +73,7 @@ jobs:
           working-directory: ./library_front
           run: npm run test -- --watchAll=false --coverage
 
-  lintBack:
+  lint_Back:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
@@ -84,7 +84,7 @@ jobs:
           working-directory: ./library_back
           run: flake8 --count --statistics --max-line-length=120  .
 
-  lintFront:
+  lint_Front:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
