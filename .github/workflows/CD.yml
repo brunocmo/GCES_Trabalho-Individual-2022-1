@@ -7,11 +7,11 @@ on:
 
 jobs:
 
-  use-build:
-    uses: brunocmo/GCES_Trabalho-Individual-2022-1/.github/workflows/CI.yml@main
+  ci:
+    uses: ./.github/workflows/CI.yml
       
   deploy_back:
-    needs: use-build
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
